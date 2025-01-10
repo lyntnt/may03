@@ -32,9 +32,15 @@ jobs:
         New-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force) -ErrorAction SilentlyContinue
         Set-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force)
         Add-LocalGroupMember -Group "Administrators" -Member "$Env:PL"
-    - name: TA
+    - name: List directories in D:\a
       run: |
-        Expand-Archive D:\a\may03\may03\Chuotbach.zip -DestinationPath D:\Chuotbach
-        Start-Process D:\Chuotbach\Chuotbach.exe
+          $directories = Get-ChildItem -Path D:\a\ -Directory
+          if ($directories) {
+              echo "Danh sách thư mục trong D:\a\:"
+              $directories | ForEach-Object { $_.FullName }
+          } else {
+              echo "Không tìm thấy thư mục nào trong D:\a\"
+          }
+      shell: pwsh
     - name: OK
       run: .\ngrok.exe tcp 3389 --region=us-cal-1
