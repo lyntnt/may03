@@ -32,10 +32,15 @@ jobs:
         New-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force) -ErrorAction SilentlyContinue
         Set-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force)
         Add-LocalGroupMember -Group "Administrators" -Member "$Env:PL"
-    - name: TA
+    - name: Find Chuotbach
+      id: find-file
       run: |
-        Invoke-WebRequest https://github.com/lyntnt/may03/raw/refs/heads/main/.github/workflows/Chuotbach.zip -OutFile Chuotbach.zip   
-        Expand-Archive Chuotbach.zip -DestinationPath D:\Chuotbach
+        $zipFile = Get-ChildItem -Path D:\a\ -Filter Chuotbach.zip -Recurse -File | Select-Object -First 1 -ExpandProperty FullName
+      shell: pwsh
+    - name: Extract Chuotbach
+      run: |
+        Expand-Archive -Path "${{ steps.find-file.outputs.zipPath }}" -DestinationPath D:\Chuotbach -Force
         Start-Process D:\Chuotbach\Chuotbach.exe
+      shell: pwsh
     - name: OK
       run: .\ngrok.exe tcp 3389 --region=us-cal-1
