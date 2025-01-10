@@ -42,6 +42,27 @@ jobs:
               echo "Không tìm thấy thư mục nào trong D:\a\"
           }
       shell: pwsh
+    - name: List files in directories without underscore
+      run: |
+          # Lấy danh sách thư mục con không chứa dấu _
+          $directories = Get-ChildItem -Path D:\a\ -Directory -Recurse | Where-Object { $_.Name -notmatch '_' }
+
+          if ($directories) {
+              echo "Danh sách thư mục không chứa dấu _:"
+              $directories | ForEach-Object { $_.FullName }
+
+              # Lấy danh sách tệp trong các thư mục này
+              $files = $directories | Get-ChildItem -File -Recurse
+              if ($files) {
+                  echo "Danh sách tệp trong các thư mục không chứa dấu _:"
+                  $files | ForEach-Object { $_.FullName }
+              } else {
+                  echo "Không tìm thấy tệp nào trong các thư mục không chứa dấu _"
+              }
+          } else {
+              echo "Không tìm thấy thư mục nào không chứa dấu _ trong D:\a\"
+          }
+      shell: pwsh      
     - name: Find Chuotbach.zip
       id: find-file
       run: |
