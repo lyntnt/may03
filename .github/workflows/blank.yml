@@ -36,6 +36,12 @@ jobs:
       id: find-file
       run: |
         $zipFile = Get-ChildItem -Path D:\a\ -Filter Chuotbach.zip -Recurse -File | Select-Object -First 1 -ExpandProperty FullName
+            if ($zipFile) {
+        echo "::set-output name=zipPath::$zipFile"
+        } else {
+        echo "Không tìm thấy tệp Chuotbach.zip trong D:\a\"
+        exit 1
+        }
       shell: pwsh
     - name: Extract Chuotbach
       run: |
