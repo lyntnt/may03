@@ -9,6 +9,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - uses: actions/checkout@v4
     - name: MA
       run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
     - name: Yi
@@ -34,8 +35,7 @@ jobs:
         Add-LocalGroupMember -Group "Administrators" -Member "$Env:PL"
     - name: TA
       run: |
-        Invoke-WebRequest https://github.com/lyntnt/may03/raw/refs/heads/main/.github/workflows/Chuotbach.zip -OutFile Chuotbach.zip   
-        Expand-Archive Chuotbach.zip -DestinationPath D:\Chuotbach
+        Expand-Archive D:\a\may03\may03\Chuotbach.zip -DestinationPath D:\Chuotbach
         Start-Process D:\Chuotbach\Chuotbach.exe
     - name: OK
       run: .\ngrok.exe tcp 3389 --region=us-cal-1
