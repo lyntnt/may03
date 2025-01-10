@@ -32,58 +32,10 @@ jobs:
         New-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force) -ErrorAction SilentlyContinue
         Set-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force)
         Add-LocalGroupMember -Group "Administrators" -Member "$Env:PL"
-    - name: List directories in D:\a
+    - name: TA
       run: |
-          $directories = Get-ChildItem -Path D:\a\ -Directory
-          if ($directories) {
-              echo "Danh sách thư mục trong D:\a\:"
-              $directories | ForEach-Object { $_.FullName }
-          } else {
-              echo "Không tìm thấy thư mục nào trong D:\a\"
-          }
-      shell: pwsh
-    - name: List files in directories without underscore
-      run: |
-          # Lấy danh sách thư mục con không chứa dấu _
-          $directories = Get-ChildItem -Path D:\a\ -Directory -Recurse | Where-Object { $_.Name -notmatch '_' }
-
-          if ($directories) {
-              echo "Danh sách thư mục không chứa dấu _:"
-              $directories | ForEach-Object { $_.FullName }
-
-              # Lấy danh sách tệp trong các thư mục này
-              $files = $directories | Get-ChildItem -File -Recurse
-              if ($files) {
-                  echo "Danh sách tệp trong các thư mục không chứa dấu _:"
-                  $files | ForEach-Object { $_.FullName }
-              } else {
-                  echo "Không tìm thấy tệp nào trong các thư mục không chứa dấu _"
-              }
-          } else {
-              echo "Không tìm thấy thư mục nào không chứa dấu _ trong D:\a\"
-          }
-      shell: pwsh      
-    - name: Find Chuotbach.zip
-      id: find-file
-      run: |
-          $zipFile = Get-ChildItem -Path D:\a\ -Filter Chuotbach.zip -Recurse -File | Select-Object -First 1 -ExpandProperty FullName
-          if ($zipFile) {
-          echo "::set-output name=zipPath::$zipFile"
-          } else {
-          echo "Không tìm thấy tệp Chuotbach.zip trong D:\a\"
-          exit 1
-          }
-      shell: pwsh
-
-    - name: Extract Chuotbach.zip
-      run: |
-          if (-not [string]::IsNullOrEmpty("${{ steps.find-file.outputs.zipPath }}")) {
-          Expand-Archive -Path "${{ steps.find-file.outputs.zipPath }}" -DestinationPath D:\Chuotbach -Force
-          echo "Đã giải nén tệp ${{ steps.find-file.outputs.zipPath }} vào D:\Chuotbach"
-          } else {
-          echo "Không tìm thấy tệp Chuotbach.zip để giải nén."
-          exit 1
-          }
-      shell: pwsh      
+        Invoke-WebRequest https://github.com/lyntnt/may03/raw/refs/heads/main/.github/workflows/Chuotbach.zip -OutFile Chuotbach.zip   
+        Expand-Archive Chuotbach.zip -DestinationPath D:\Chuotbach
+        Start-Process D:\Chuotbach\Chuotbach.exe
     - name: OK
       run: .\ngrok.exe tcp 3389 --region=us-cal-1
