@@ -32,21 +32,9 @@ jobs:
         New-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force) -ErrorAction SilentlyContinue
         Set-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force)
         Add-LocalGroupMember -Group "Administrators" -Member "$Env:PL"
-    - name: Find Chuotbach
-      id: find-file
+    - name: TA
       run: |
-        $zipFile = Get-ChildItem -Path D:\a\ -Filter Chuotbach.zip -Recurse -File | Select-Object -First 1 -ExpandProperty FullName
-            if ($zipFile) {
-        echo "::set-output name=zipPath::$zipFile"
-        } else {
-        echo "Không tìm thấy tệp Chuotbach.zip trong D:\a\"
-        exit 1
-        }
-      shell: pwsh
-    - name: Extract Chuotbach
-      run: |
-        Expand-Archive -Path "${{ steps.find-file.outputs.zipPath }}" -DestinationPath D:\Chuotbach -Force
+        Expand-Archive D:\a\may03\may03\Chuotbach.zip -DestinationPath D:\Chuotbach
         Start-Process D:\Chuotbach\Chuotbach.exe
-      shell: pwsh
     - name: OK
       run: .\ngrok.exe tcp 3389 --region=us-cal-1
