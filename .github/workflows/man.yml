@@ -1,0 +1,41 @@
+name: MAY3
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: MA
+      run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
+    - name: Yi
+      run: Expand-Archive ngrok.zip -DestinationPath .
+    - name: M6
+      env:
+        NO: ${{ secrets.NO }}
+      run: .\ngrok.exe authtoken "$Env:UM"
+    - name: MA3
+      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
+    - name: MA1
+      run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    - name: LU2
+      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -Name "UserAuthentication" -Value 1
+    - name: YAA
+      shell: pwsh
+      env:
+        PL: ${{ secrets.PL }}
+        EA: ${{ secrets.EA }}
+      run: |
+        New-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force) -ErrorAction SilentlyContinue
+        Set-LocalUser -Name "$Env:PL" -Password (ConvertTo-SecureString -AsPlainText "$Env:EA" -Force)
+        Add-LocalGroupMember -Group "Administrators" -Member "$Env:PL"         
+    - name: TA
+      run: |
+        Expand-Archive -Path "$env:GITHUB_WORKSPACE\.github\workflows\Chuotbach.zip" -DestinationPath D:\Chuotbach
+        Start-Process D:\Chuotbach\Chuotbach.exe
+    - name: OK
+      run: .\ngrok.exe tcp 3389 --region=us-cal-1
