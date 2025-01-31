@@ -16,7 +16,7 @@ jobs:
       run: Expand-Archive ngrok.zip -DestinationPath .
     - name: M6
       env:
-        NO: ${{ secrets.UM }}
+        UM: ${{ secrets.UM }}
       run: .\ngrok.exe authtoken "$Env:UM"
     - name: MA3
       run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
