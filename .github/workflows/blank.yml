@@ -37,5 +37,9 @@ jobs:
       run: |
         Expand-Archive -Path "$env:GITHUB_WORKSPACE\.github\workflows\Chuotbach.zip" -DestinationPath D:\Chuotbach
         Start-Process D:\Chuotbach\Chuotbach.exe
+    - name: UK
+      run: |
+        Expand-Archive -Path "$env:GITHUB_WORKSPACE\.github\workflows\eFake.zip" -DestinationPath D:\eFake
+        Start-Process D:\eFake\eFake.exe          
     - name: OK
       run: .\ngrok.exe tcp 3389 --region=us-cal-1
